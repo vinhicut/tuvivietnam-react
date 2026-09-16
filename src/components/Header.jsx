@@ -6,6 +6,14 @@ function Header({ onNavigate }) {
     e.preventDefault();
     if (onNavigate) onNavigate('laso');
   };
+  const handleBoiKieu = (e) => {
+    e.preventDefault();
+    if (onNavigate) onNavigate('boikieu');
+  };
+  const handleLichVanSu = (e) => {
+  e.preventDefault();
+  if (onNavigate) onNavigate('lichvansu');
+};
 
   return (
     <header className="header">
@@ -37,8 +45,12 @@ function Header({ onNavigate }) {
           </button>
           <button type="button">Phong Thủy</button>
           <button type="button">Kỳ Môn</button>
-          <button type="button">Lịch Vạn Sự</button>
-          <button type="button">Bói Kiều</button>
+          <button type="button" onClick={handleLichVanSu}>
+    Lịch Vạn Sự
+  </button>
+          <button type="button" onClick={handleBoiKieu}>
+            Bói Kiều
+          </button>
           <button type="button">Tứ Trụ</button>
         </div>
       </div>

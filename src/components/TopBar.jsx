@@ -35,7 +35,6 @@ function TopBar() {
     <>
       <div className="top-bar">
         <div className="top-bar-left">
-          <span className="weather">☀️ 35°C Hanoi</span>
           <span className="date">{dateStr}</span>
         </div>
         <div className="top-bar-right">
@@ -57,9 +56,6 @@ function TopBar() {
               Sign in / Join
             </a>
           )}
-          <a href="#">About</a>
-          <a href="#">Privacy</a>
-          <a href="#">Contact</a>
           <div className="social-icons">
             <a href="#" title="Facebook">
               f

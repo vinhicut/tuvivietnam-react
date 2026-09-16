@@ -77,7 +77,7 @@ function Footer() {
         <div className="footer-about">
           <div className="footer-logo">
             <div className="bagua small">☯</div>
-            <strong>Diễn đàn TỬ VI VIỆT NAM</strong>
+            <strong>DIỄN ĐÀN TỦ VI HỒNG ÂN</strong>
           </div>
           <p>
             Diễn đàn Tử Vi Việt Nam được thành lập từ năm 2026 bởi thầy Trần Ngọc Điệp, bút danh tuetvnb, cùng đông đảo thành viên yêu thích bộ
