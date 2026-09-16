@@ -13,6 +13,7 @@ import Contact from './components/Contact';
 import CategoryPage from './components/CategoryPage';
 import BoiKieu from './components/BoiKieu';
 import LichVanSu from './components/LichVanSu';
+import KhamThienTuViThienTuong from './components/KhamThienTuViThienTuong';
 
 function App() {
   const navigate = useNavigate();
@@ -64,6 +65,7 @@ function App() {
           <Route path="/boi-kieu" element={<BoiKieu />} />
           <Route path="/lien-he" element={<Contact />} />
           <Route path="/chuyen-muc" element={<CategoryPage />} />
+          <Route path="/chuyen-muc/thien-tuong" element={<KhamThienTuViThienTuong />} />
           
           {/* Có thể thêm route chi tiết bài viết sau này */}
           {/* <Route path="/bai-viet/:id" element={<ArticleDetail />} /> */}
