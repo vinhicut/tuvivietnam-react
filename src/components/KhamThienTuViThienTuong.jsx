@@ -29,16 +29,15 @@ function KhamThienTuViThienTuong() {
 
         {/* Thông tin bài viết */}
         <div className="thien-tuong-meta">
-          <span>Tử Vi</span>
-          <span>22/10/2020</span>
-          <span>Tử Vi Việt Nam</span>
+          <span> 17/09/2026 </span>
+          <span>Tử Vi Hồng Ân</span>
         </div>
 
 
         {/* Ảnh đại diện */}
         <div className="thien-tuong-cover">
           <img
-            src="https://picsum.photos/seed/thientuong/1000/500"
+            src="https://picsum.photos/seed/thientuong/900/500"
             alt="Khâm Thiên Giám Tử Vi Đẩu Số - Thiên Tướng"
           />
         </div>

@@ -1,0 +1,227 @@
+
+/* =========================================
+   FLOATING CONTACT
+========================================= */
+
+.floating-contact {
+  position: fixed;
+
+  right: 12px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  z-index: 9999;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+
+/* =========================================
+   ITEM
+========================================= */
+
+.floating-contact-item {
+  width: 68px;
+  min-height: 76px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: #fff;
+
+  border-radius: 10px;
+
+  text-decoration: none;
+
+  box-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.12);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+/* Hover */
+
+.floating-contact-item:hover {
+  transform: translateX(-4px);
+
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.18);
+
+  text-decoration: none;
+}
+
+
+/* =========================================
+   ICON
+========================================= */
+
+.floating-contact-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 3px;
+
+  border-radius: 50%;
+
+  font-weight: 700;
+}
+
+
+/* =========================================
+   MESSENGER
+========================================= */
+
+.messenger .floating-contact-icon {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  background: linear-gradient(
+    135deg,
+    #00b2ff,
+    #8b3dff
+  );
+
+  color: #fff;
+
+  font-size: 21px;
+
+  box-shadow:
+    0 2px 6px rgba(80, 60, 220, 0.25);
+}
+
+
+/*
+  Tạo hình bong bóng Messenger
+*/
+
+.messenger-icon {
+  transform: rotate(-10deg);
+}
+
+
+/* =========================================
+   ZALO
+========================================= */
+
+.zalo .floating-contact-icon {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  background: #fff;
+
+  border: 1px solid #ddd;
+
+  color: #0068ff;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+
+/* =========================================
+   PHONE
+========================================= */
+
+.phone .floating-contact-icon {
+  width: 42px;
+  height: 42px;
+
+  background: #fff;
+
+  border: 1px solid #ddd;
+
+  color: #e53935;
+
+  font-size: 25px;
+}
+
+
+/* =========================================
+   TIME
+========================================= */
+
+.floating-contact-time {
+  display: block;
+
+  font-size: 12px;
+
+  line-height: 1.2;
+
+  color: #222;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+  .floating-contact {
+    right: 6px;
+    gap: 6px;
+  }
+
+  .floating-contact-item {
+    width: 60px;
+    min-height: 70px;
+
+    border-radius: 8px;
+  }
+
+  .floating-contact-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .floating-contact-time {
+    font-size: 11px;
+  }
+}
+
+
+/* =========================================
+   MOBILE NHỎ
+========================================= */
+
+@media (max-width: 480px) {
+
+  .floating-contact {
+    right: 5px;
+  }
+
+  .floating-contact-item {
+    width: 56px;
+    min-height: 66px;
+  }
+
+  .floating-contact-icon,
+  .messenger .floating-contact-icon,
+  .zalo .floating-contact-icon,
+  .phone .floating-contact-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .floating-contact-time {
+    font-size: 10px;
+  }
+}

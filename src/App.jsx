@@ -14,6 +14,9 @@ import CategoryPage from './components/CategoryPage';
 import BoiKieu from './components/BoiKieu';
 import LichVanSu from './components/LichVanSu';
 import KhamThienTuViThienTuong from './components/KhamThienTuViThienTuong';
+import KhamThienTuViThienLuong from './components/BaiViet/KhamThienTuViThienLuong';
+import FloatingContact from './components/FloatingContact';
+import ZaloContactCard from './components/ZaloContactCard';
 
 function App() {
   const navigate = useNavigate();
@@ -66,10 +69,14 @@ function App() {
           <Route path="/lien-he" element={<Contact />} />
           <Route path="/chuyen-muc" element={<CategoryPage />} />
           <Route path="/chuyen-muc/thien-tuong" element={<KhamThienTuViThienTuong />} />
+          <Route path="/lien-he/zalo" element={<ZaloContactCard />}/>
+          <Route path="/chuyen-muc/thien-luong" element={<KhamThienTuViThienLuong />} />
           
           {/* Có thể thêm route chi tiết bài viết sau này */}
           {/* <Route path="/bai-viet/:id" element={<ArticleDetail />} /> */}
+          
         </Routes>
+        <FloatingContact />
       </main>
 
       <Footer />

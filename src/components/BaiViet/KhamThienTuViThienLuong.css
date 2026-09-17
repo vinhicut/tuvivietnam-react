@@ -1,0 +1,319 @@
+
+/* src/components/KhamThienTuViThienLuong.css */
+
+.thien-luong-page {
+  background: #fff;
+  min-height: 100vh;
+  padding: 20px 16px 60px;
+}
+
+.thien-luong-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+
+/* =========================================
+   BREADCRUMB
+========================================= */
+
+.thien-luong-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  font-size: 13px;
+  color: #888;
+
+  margin-bottom: 18px;
+}
+
+.thien-luong-breadcrumb a {
+  color: #777;
+  text-decoration: none;
+}
+
+.thien-luong-breadcrumb a:hover {
+  color: #111;
+}
+
+
+/* =========================================
+   TITLE
+========================================= */
+
+.thien-luong-title {
+  margin: 0 0 14px;
+
+  font-size: 32px;
+  line-height: 1.25;
+  font-weight: 700;
+
+  color: #222;
+}
+
+
+/* =========================================
+   META
+========================================= */
+
+.thien-luong-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+
+  font-size: 13px;
+  color: #777;
+
+  margin-bottom: 24px;
+}
+
+.thien-luong-meta span {
+  position: relative;
+}
+
+
+/* =========================================
+   COVER IMAGE
+========================================= */
+
+.thien-luong-cover {
+  width: 100%;
+  margin-bottom: 30px;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.thien-luong-cover img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.thien-luong-content {
+  color: #333;
+
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.thien-luong-content p {
+  margin: 0 0 20px;
+}
+
+.thien-luong-content h2 {
+  margin: 38px 0 14px;
+
+  font-size: 24px;
+  line-height: 1.35;
+  font-weight: 700;
+
+  color: #222;
+}
+
+.thien-luong-content h3 {
+  margin: 0 0 12px;
+
+  font-size: 19px;
+  color: #222;
+}
+
+.thien-luong-content ul {
+  margin: 0 0 24px;
+  padding-left: 25px;
+}
+
+.thien-luong-content li {
+  margin-bottom: 8px;
+}
+
+
+/* =========================================
+   LEAD
+========================================= */
+
+.thien-luong-lead {
+  font-size: 18px;
+  line-height: 1.8;
+
+  padding: 18px 20px;
+
+  background: #f7f7f7;
+  border-left: 4px solid #222;
+
+  margin-bottom: 30px !important;
+}
+
+
+/* =========================================
+   TWO COLUMNS
+========================================= */
+
+.thien-luong-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+
+  margin: 25px 0 30px;
+}
+
+.thien-luong-box {
+  padding: 20px;
+
+  background: #fafafa;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+}
+
+.thien-luong-box ul {
+  margin-bottom: 0;
+}
+
+
+/* =========================================
+   HIGHLIGHT
+========================================= */
+
+.thien-luong-highlight {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+
+  margin: 25px 0 30px;
+}
+
+.thien-luong-highlight > div {
+  padding: 20px 15px;
+
+  text-align: center;
+
+  background: #f7f7f7;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+}
+
+.thien-luong-highlight strong {
+  display: block;
+
+  font-size: 18px;
+  margin-bottom: 8px;
+
+  color: #222;
+}
+
+.thien-luong-highlight span {
+  display: block;
+
+  font-size: 14px;
+  line-height: 1.5;
+
+  color: #666;
+}
+
+
+/* =========================================
+   NOTE
+========================================= */
+
+.thien-luong-note {
+  margin-top: 40px;
+  padding: 18px 20px;
+
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+
+  font-size: 14px;
+  line-height: 1.7;
+
+  color: #666;
+}
+
+
+/* =========================================
+   BACK
+========================================= */
+
+.thien-luong-back {
+  margin-top: 30px;
+}
+
+.thien-luong-back a {
+  display: inline-block;
+
+  padding: 10px 16px;
+
+  background: #222;
+  color: #fff;
+
+  border-radius: 4px;
+
+  text-decoration: none;
+
+  font-size: 14px;
+}
+
+.thien-luong-back a:hover {
+  background: #444;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+
+  .thien-luong-page {
+    padding: 15px 12px 40px;
+  }
+
+  .thien-luong-title {
+    font-size: 25px;
+  }
+
+  .thien-luong-content {
+    font-size: 16px;
+  }
+
+  .thien-luong-content h2 {
+    font-size: 21px;
+    margin-top: 30px;
+  }
+
+  .thien-luong-lead {
+    font-size: 16px;
+    padding: 15px;
+  }
+
+  .thien-luong-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .thien-luong-highlight {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  .thien-luong-title {
+    font-size: 22px;
+  }
+
+  .thien-luong-highlight {
+    grid-template-columns: 1fr;
+  }
+
+  .thien-luong-meta {
+    gap: 8px 14px;
+  }
+}

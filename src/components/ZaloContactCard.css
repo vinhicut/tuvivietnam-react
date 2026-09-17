@@ -1,0 +1,318 @@
+
+/* =========================================
+   ZALO CONTACT CARD
+   ========================================= */
+
+.zalo-card {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  font-family: Arial, Helvetica, sans-serif;
+  color: #333;
+}
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+.zalo-card .header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8fbff, #ffffff);
+  border-bottom: 1px solid #eeeeee;
+}
+
+/* Logo */
+
+.zalo-logo {
+  width: 68px;
+  height: 68px;
+  object-fit: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px solid #ffffff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+/* Thông tin bên phải logo */
+
+.zalo-card .info {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Tên */
+
+.zalo-card .name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 19px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 4px;
+}
+
+/* Dấu verified */
+
+.zalo-card .verified {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  background: #1688f0;
+  border-radius: 50%;
+}
+
+.zalo-card .verified::after {
+  content: "✓";
+  color: #fff;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+/* Danh mục */
+
+.zalo-card .category {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+/* =========================================
+   BUTTON NHẮN TIN
+   ========================================= */
+
+.message-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  padding: 8px 16px;
+
+  background: #1688f0;
+  color: #fff;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.message-btn:hover {
+  background: #0879df;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(22, 136, 240, 0.25);
+}
+
+.message-btn:active {
+  transform: translateY(0);
+}
+
+/* =========================================
+   QR SECTION
+   ========================================= */
+
+.qr-section {
+  padding: 22px 20px;
+  text-align: center;
+  background: #fafafa;
+}
+
+.qr-code {
+  width: 170px;
+  height: 170px;
+  margin: 0 auto 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fff;
+
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* QR giả */
+
+.qr-placeholder {
+  width: 135px;
+  height: 135px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  border: 3px dashed #1688f0;
+  border-radius: 8px;
+
+  color: #1688f0;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.qr-placeholder strong {
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+
+.qr-text {
+  max-width: 300px;
+  margin: 0 auto;
+
+  color: #777;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* =========================================
+   DETAILS
+   ========================================= */
+
+.details {
+  padding: 20px;
+  border-top: 1px solid #eeeeee;
+}
+
+.details-title {
+  margin-bottom: 14px;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  color: #222;
+}
+
+.detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  margin-bottom: 13px;
+
+  font-size: 13px;
+  line-height: 1.5;
+
+  color: #555;
+}
+
+.detail-item:last-child {
+  margin-bottom: 0;
+}
+
+.detail-item > span:first-child {
+  width: 20px;
+  flex-shrink: 0;
+
+  text-align: center;
+
+  font-size: 16px;
+}
+
+.detail-item a {
+  color: #1688f0;
+  text-decoration: none;
+
+  word-break: break-word;
+}
+
+.detail-item a:hover {
+  text-decoration: underline;
+}
+
+/* =========================================
+   DESCRIPTION
+   ========================================= */
+
+.description {
+  padding: 18px 20px 20px;
+
+  background: #fafafa;
+
+  border-top: 1px solid #eeeeee;
+
+  color: #666;
+
+  font-size: 13px;
+  line-height: 1.7;
+
+  text-align: justify;
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 480px) {
+  .zalo-card {
+    max-width: 100%;
+    border-radius: 12px;
+  }
+
+  .zalo-card .header {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .zalo-logo {
+    width: 58px;
+    height: 58px;
+  }
+
+  .zalo-card .name {
+    font-size: 17px;
+  }
+
+  .message-btn {
+    padding: 7px 13px;
+    font-size: 12px;
+  }
+
+  .qr-section {
+    padding: 18px 15px;
+  }
+
+  .qr-code {
+    width: 150px;
+    height: 150px;
+  }
+
+  .qr-placeholder {
+    width: 120px;
+    height: 120px;
+  }
+
+  .details {
+    padding: 17px 16px;
+  }
+
+  .description {
+    padding: 16px;
+  }
+}
