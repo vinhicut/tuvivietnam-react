@@ -33,7 +33,7 @@ function FloatingContact() {
       ============================== */}
       <a
         className="floating-contact-item zalo"
-        href="https://tuvihongan.com/lien-he/zalo"
+        href="http://localhost:5173/lien-he/zalo"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat Zalo với Phúc Anh"

@@ -87,7 +87,7 @@ function Footer() {
           </p>
           <div className="contact-info">
             <div>
-              Liên hệ: <a href="tel:0920461699">0920461699</a>
+              Liên hệ: <a href="tel:0924616199">0924 616 199</a>
             </div>
             <div>info@tuvivietnam.vn</div>
           </div>
