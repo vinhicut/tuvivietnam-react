@@ -73,6 +73,7 @@ class TuViRequestHandler(SimpleHTTPRequestHandler):
         serve_dir = DIST_DIR if os.path.exists(DIST_DIR) else PUBLIC_DIR
         if not os.path.exists(serve_dir):
             os.makedirs(serve_dir, exist_ok=True)
+        kwargs.pop("directory", None)
         super().__init__(*args, directory=serve_dir, **kwargs)
 
     def list_directory(self, path):
@@ -211,11 +212,12 @@ def run_server(host: str = None, port: int = None):
         raise
 
     display_host = "localhost" if host in ["0.0.0.0", ""] else host
+    static_folder = DIST_DIR if os.path.exists(DIST_DIR) else PUBLIC_DIR
     print(f"=" * 60)
     print(f"  🚀 MÁY CHỦ TỬ VI HỒNG ÂN - CORE API ENGINE")
     print(f"  👉 API Endpoint:    http://{display_host}:{port}/api/calculate")
     print(f"  👉 Health Check:     http://{display_host}:{port}/api/health")
-    print(f"  👉 Static Files:     {httpd.RequestHandlerClass(None, None, httpd, directory=httpd.RequestHandlerClass.directory if hasattr(httpd.RequestHandlerClass, 'directory') else DIST_DIR if os.path.exists(DIST_DIR) else PUBLIC_DIR).directory}")
+    print(f"  👉 Static Files:     {static_folder}")
     print(f"=" * 60)
     print(f"  Nhấn Ctrl + C để dừng máy chủ.\n")
 
