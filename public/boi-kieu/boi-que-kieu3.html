@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bói Quẻ Kiều - Giao diện Quẻ số 76</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #1a2f26;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Container của Popup bói quẻ */
+        .que-popup-card {
+            background-color: #1a4335;
+            border: 4px solid #d4af37;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 420px;
+            padding: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Nút đóng hình tròn dấu X góc trên cùng bên phải */
+        .btn-close-popup {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            width: 28px;
+            height: 28px;
+            background-color: rgba(139, 69, 19, 0.6);
+            border: 1px solid #d4af37;
+            border-radius: 50%;
+            color: #d4af37;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: background-color 0.2s;
+        }
+
+        .btn-close-popup:hover {
+            background-color: rgba(139, 69, 19, 0.9);
+        }
+
+        /* Khung chứa tranh vẽ nghệ thuật bên trên */
+        .art-banner-container {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #d4af37;
+            position: relative;
+            background: linear-gradient(135deg, #134e3a, #0a2f22);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* SVG minh họa Thúy Kiều cầm cuốn thư để thay thế ảnh minh họa gốc */
+        .art-banner-illustration {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Khung hiển thị 2 câu thơ lục bát trung tâm */
+        .poetry-verse-box {
+            text-align: center;
+            padding: 14px 10px;
+            color: #f1ebd9;
+            font-size: 18px;
+            line-height: 1.6;
+            font-style: italic;
+            font-family: 'Georgia', serif;
+        }
+
+        .poetry-verse-box .line-6 {
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .poetry-verse-box .line-8 {
+            display: block;
+            padding-left: 20px;
+        }
+
+        /* Khung thông tin chân trang chứa tiêu đề Quẻ số */
+        .que-footer-info {
+            border: 2px solid #5a3d16;
+            background-color: #2c1a04;
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+        }
+
+        .que-footer-info .title-main {
+            color: #d4af37;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .que-footer-info .title-sub {
+            color: #ffffff;
+            font-size: 15px;
+            margin-bottom: 4px;
+            opacity: 0.9;
+        }
+
+        .que-footer-info .desc-text {
+            color: #c9b195;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Khung giao diện chính của Popup Quẻ Kiều -->
+    <div class="que-popup-card">
+        <!-- Nút đóng dấu X -->
+        <button class="btn-close-popup" aria-label="Đóng popup">×</button>
+        
+        <!-- Khung ảnh/tranh minh họa phía trên -->
+        <div class="art-banner-container">
+            <!-- Sử dụng SVG để tái tạo lại màu sắc và bố cục không gian tranh cổ trang -->
+            <svg class="art-banner-illustration" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                <!-- Nền xanh lá chấm bi nghệ thuật -->
+                <rect width="400" height="400" fill="#1b4125"/>
+                <defs>
+                    <pattern id="dot-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                        <circle cx="10" cy="10" r="1.5" fill="#32633d"/>
+                    </pattern>
+                </defs>
+                <rect width="400" height="400" fill="url(#dot-pattern)" />
+
+                <!-- Đèn lồng góc trên bên trái -->
+                <path d="M 0,40 Q 40,30 50,0 L 0,0 Z" fill="#d4af37" opacity="0.3"/>
+                <circle cx="50" cy="80" r="45" fill="#e05326"/>
+                <ellipse cx="50" cy="80" rx="20" ry="45" fill="#f07243"/>
+                <line x1="50" y1="125" x2="50" y2="180" stroke="#d4af37" stroke-width="2"/>
+                <path d="M 45,180 L 55,180 L 52,220 L 48,220 Z" fill="#d4af37"/>
+
+                <!-- Đèn lồng góc trên bên phải -->
+                <circle cx="350" cy="100" r="50" fill="#e05326"/>
+                <ellipse cx="350" cy="100" rx="22" ry="50" fill="#f07243"/>
+                <line x1="350" y1="150" x2="350" y2="240" stroke="#d4af37" stroke-width="2"/>
+                <path d="M 345,240 L 355,240 L 352,300 L 348,300 Z" fill="#d4af37"/>
+
+                <!-- Lan can kiến trúc cổ phía sau -->
+                <rect x="0" y="310" width="400" height="40" fill="#4d3211"/>
+                <rect x="0" y="320" width="400" height="8" fill="#d4af37"/>
+                <line x1="60" y1="328" x2="100" y2="345" stroke="#d4af37" stroke-width="3"/>
+                <line x1="100" y1="345" x2="140" y2="328" stroke="#d4af37" stroke-width="3"/>
+                <line x1="260" y1="328" x2="300" y2="345" stroke="#d4af37" stroke-width="3"/>
+                <line x1="300" y1="345" x2="340" y2="328" stroke="#d4af37" stroke-width="3"/>
+                <rect x="0" y="348" width="400" height="52" fill="#2d1d08"/>
+
+                <!-- Vùng hào quang màu vàng sau lưng nhân vật -->
+                <path d="M 80,400 Q 200,100 320,400 Z" fill="#e5c158" opacity="0.25"/>
+
+                <!-- Minh họa nhân vật Thúy Kiều phục trang cổ -->
+                <!-- Áo dài vạt cổ chéo -->
+                <path d="M 120,400 L 150,260 Q 200,240 250,260 L 280,400 Z" fill="#e07d26"/>
+                <path d="M 175,255 L 200,320 L 225,255 Z" fill="#b53c16"/> <!-- Cổ áo bên trong -->
+                <path d="M 175,255 L 200,400" stroke="#d4af37" stroke-width="2"/>
+                
+                <!-- Chuỗi tràng hạt châu báu đeo cổ -->
+                <circle cx="178" cy="280" r="4" fill="#601818"/>
+                <circle cx="184" cy="292" r="4" fill="#601818"/>
+                <circle cx="192" cy="302" r="4" fill="#601818"/>
+                <circle cx="202" cy="305" r="4" fill="#601818"/>
+                <circle cx="212" cy="301" r="4" fill="#601818"/>
+                <circle cx="219" cy="290" r="4" fill="#601818"/>
+                <circle cx="223" cy="278" r="4" fill="#601818"/>
+
+                <!-- Khuôn mặt và cổ -->
+                <path d="M 170,260 Q 200,290 230,260 L 220,180 Q 200,195 180,180 Z" fill="#fcd7b5"/>
+                <!-- Tóc và Mũ mấn cổ trang -->
+                <path d="M 172,185 Q 200,150 228,185 Q 235,160 220,130 Q 200,110 180,130 Q 165,160 172,185 Z" fill="#211611"/>
+                <ellipse cx="200" cy="130" rx="45" ry="18" fill="#c48a74" transform="rotate(-5, 200, 130)"/>
+                <ellipse cx="200" cy="126" rx="40" ry="14" fill="#dba28c" transform="rotate(-5, 200, 126)"/>
+
+                <!-- Chi tiết ngũ quan thanh tú nét vẽ tối giản -->
+                <path d="M 183,195 Q 190,192 193,196" stroke="#422517" stroke-width="1.5" fill="none"/> <!-- Lông mày trái -->
+                <path d="M 207,194 Q 210,191 217,193" stroke="#422517" stroke-width="1.5" fill="none"/> <!-- Lông mày phải -->
+                <path d="M 186,203 Q 191,201 194,204" stroke="#211611" stroke-width="2" fill="none"/> <!-- Mắt trái -->
+                <path d="M 206,202 Q 209,200 214,201" stroke="#211611" stroke-width="2" fill="none"/> <!-- Mắt phải -->
+                <path d="M 199,203 L 201,218 L 198,221" stroke="#d6a084" stroke-width="1.5" fill="none"/> <!-- Mũi -->
+                <path d="M 193,232 Q 200,238 207,232" fill="#c23434"/> <!-- Môi hồng -->
+
+                <!-- Cánh tay nâng Cuốn thư -->
+                <path d="M 120,400 L 110,290 L 150,240 L 180,290 Z" fill="#e07d26"/> <!-- Tay trái -->
+                <path d="M 280,400 L 260,300 L 210,250 L 215,310 Z" fill="#e07d26"/> <!-- Tay phải -->
+
+                <!-- Bàn tay nâng đỡ ống cuốn thư -->
+                <path d="M 140,240 Q 155,220 165,245 Z" fill="#fcd7b5"/>
+                <path d="M 210,250 Q 195,240 190,265 Z" fill="#fcd7b5"/>
+
+                <!-- Ống cuốn thư bằng tre/vàng cổ kính -->
+                <g transform="rotate(-35, 200, 240)">
+                    <rect x="90" y="225" width="220" height="35" rx="4" fill="#a87627" stroke="#4d3107" stroke-width="2"/>
+                    <!-- Các vòng chỉ đỏ buộc ống -->
+                    <rect x="110" y="225" width="12" height="35" fill="#a62424"/>
+                    <rect x="126" y="225" width="5" height="35" fill="#a62424"/>
+                    <rect x="135" y="225" width="5" height="35" fill="#a62424"/>
+                    <rect x="144" y="225" width="5" height="35" fill="#a62424"/>
+                    
+                    <rect x="260" y="225" width="12" height="35" fill="#a62424"/>
+                </g>
+
+                <!-- Đồng tiền vàng cổ và dây tua rua treo dưới cuốn thư -->
+                <circle cx="140" cy="295" r="16" fill="#e5c158" stroke="#a87627" stroke-width="1"/>
+                <rect x="135" y="290" width="10" height="10" fill="#1b4125"/> <!-- Lỗ vuông đồng tiền -->
+                <path d="M 140,245 Q 130,265 140,280" stroke="#d4af37" stroke-width="2" fill="none"/>
+                <path d="M 140,311 L 140,350" stroke="#c23434" stroke-width="3"/>
+                <path d="M 135,350 L 145,350 L 143,380 L 137,380 Z" fill="#c23434"/>
+            </svg>
+        </div>
+
+        <!-- Vùng hiển thị nội dung câu thơ lục bát -->
+        <div class="poetry-verse-box">
+            <span class="line-6">76. Lạ gì thanh khí lẽ hằng</span>
+            <span class="line-8">Túc khiên đã rửa láng láng sạch rồi</span>
+        </div>
+
+        <!-- Khung footer chứa tiêu đề Quẻ chân trang -->
+        <div class="que-footer-info">
+            <div class="title-main">Quẻ số 76</div>
+            <div class="title-sub">Quẻ số 76</div>
+            <div class="desc-text">Hai câu lục bát từ Truyện Kiều</div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "name": "tuvivietnam-react",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Website Tử Vi Hồng Ân - Hệ thống lập lá số Tử Vi Đẩu Số chuẩn xác cao",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "oxlint",
+    "server": "python backend/server.py",
+    "start": "python start_local.py",
+    "test:backend": "python backend/test_engine.py"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.4"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@vitejs/plugin-react": "^6.1.0",
+    "oxlint": "^1.79.0",
+    "vite": "^8.2.2"
+  }
+}
