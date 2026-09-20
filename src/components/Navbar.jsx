@@ -1,124 +1,90 @@
-
 import React from 'react';
-import { Link } from 'react-router-dom';
+import './Navbar.css';
 
 const softwareItems = [
-  {
-    icon: '🤖',
-    label: 'Luận Giải Tử Vi AI',
-    to: '/luan-giai-tu-vi-ai',
-  },
-  {
-    icon: '🌐',
-    label: 'Lá Số Tử Vi',
-    to: '/la-so-tu-vi',
-  },
-  {
-    icon: '🏠',
-    label: 'La Kinh Phong Thủy',
-    to: '/la-kinh-phong-thuy',
-  },
-  {
-    icon: '☯️',
-    label: 'Bói Dịch Tử Vi Việt Nam',
-    to: '/boi-dich-tu-vi-viet-nam',
-  },
-  {
-    icon: '🔄',
-    label: 'Bói Dịch PT Thăng Long',
-    to: '/boi-dich-pt-thang-long',
-  },
-  {
-    icon: '📅',
-    label: 'Lịch Vạn Sự',
-    to: '/lich-van-su',
-  },
-  {
-    icon: '🧭',
-    label: 'Lục Nhâm Đại Độn',
-    to: '/luc-nham-dai-don',
-  },
-  {
-    icon: '🚩',
-    label: 'Kỳ Môn Độn Giáp',
-    to: '/ky-mon-don-giap',
-  },
+  { icon: '🤖', label: 'Luận Giải Tử Vi AI', href: '#', view: null },
+  { icon: '🌐', label: 'Lá Số Tử Vi', href: '#', view: 'laso' },
+  { icon: '🏠', label: 'Bói Kiều', href: '#', view: 'boi-kieu' },
+  { icon: '☯️', label: 'Bói Dịch Tử Vi Việt Nam', href: '#', view: null },
+  { icon: '🔄', label: 'Bói Dịch PT Thăng Long', href: '#', view: null },
+  { icon: '📅', label: 'Lịch Vạn Sự', href: '#', view: null },
+  { icon: '🧭', label: 'Lục Nhâm Đại Độn', href: '#', view: null },
+  { icon: '🚩', label: 'Kỳ Môn Độn Giáp', href: '#', view: null },
 ];
 
-function Navbar() {
+function Navbar({ onNavigate, currentView }) {
+  const handleClick = (e, item) => {
+    e.preventDefault();
+    if (item.view && onNavigate) {
+      onNavigate(item.view);
+    }
+  };
+
+  const goHome = (e) => {
+    e.preventDefault();
+    if (onNavigate) onNavigate('article');
+  };
+
   return (
     <nav className="navbar">
       <ul className="nav-menu">
-
-        {/* TRANG CHỦ */}
         <li>
-          <Link to="/">
+          <a href="#" onClick={goHome}>
             <span className="home-icon">🏠</span> TRANG CHỦ ▾
-          </Link>
+          </a>
         </li>
-
-        {/* CHUYÊN MỤC */}
         <li>
-          <Link to="/chuyen-muc">
-            CHUYÊN MỤC ▾
-          </Link>
-        </li>
-
-        {/* PHẦN MỀM */}
+  <a
+    href="#"
+    onClick={(e) => {
+      e.preventDefault();
+      if (onNavigate) onNavigate('category');
+    }}
+  >
+    CHUYÊN MỤC ▾
+  </a>
+</li>
         <li className="has-dropdown">
-          <Link to="/phan-mem">
-            PHẦN MỀM ▾
-          </Link>
-
+          <a href="#">PHẦN MỀM ▾</a>
           <ul className="dropdown-menu">
             {softwareItems.map((item) => (
               <li key={item.label}>
-                <Link to={item.to}>
+                <a
+                  href={item.href}
+                  onClick={(e) => handleClick(e, item)}
+                  className={currentView === item.view ? 'active' : ''}
+                >
                   <span className="dd-icon">{item.icon}</span>
                   {item.label}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
         </li>
-
-        {/* SẢN PHẨM */}
         <li>
-          <Link to="/san-pham">
-            SẢN PHẨM
-          </Link>
+          <a href="#">SẢN PHẨM</a>
         </li>
-
-        {/* KHOÁ HỌC */}
         <li>
-          <Link to="/khoa-hoc">
-            KHOÁ HỌC
-          </Link>
+          <a href="#">KHOÁ HỌC</a>
         </li>
-
-        {/* DIỄN ĐÀN */}
         <li>
-          <Link to="/dien-dan">
-            DIỄN ĐÀN ▾
-          </Link>
+          <a href="#">DIỄN ĐÀN ▾</a>
         </li>
-
-        {/* LIÊN HỆ */}
         <li>
-          <Link to="/lien-he">
-            LIÊN HỆ
-          </Link>
-        </li>
-
+  <a
+    href="#"
+    onClick={(e) => {
+      e.preventDefault();
+      if (onNavigate) onNavigate('contact');
+    }}
+  >
+    LIÊN HỆ
+  </a>
+</li>
       </ul>
-
-      {/* SEARCH */}
-      <div className="search-icon">
-        🔍
-      </div>
+      <div className="search-icon">🔍</div>
     </nav>
   );
 }
 
 export default Navbar;
-

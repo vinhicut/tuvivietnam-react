@@ -99,7 +99,7 @@ footer{text-align:center;padding:18px 12px 30px;font-size:.82rem;opacity:.65}
 <button class="spin-btn" id="spinBtn" onclick="spinWheel()">XIN QUẺ</button>
 <div class="result-number" id="resultText">Nhấn nút để quay số quẻ (1–210)</div>
 </section>
-<!-- <h2 class="cards-title">Tám Quẻ Được Chọn</h2> -->
+<h2 class="cards-title">Tám Quẻ Được Chọn</h2>
 <div class="cards-grid" id="cardsContainer"></div>
 </div>
 <footer>Tham vấn thi thánh Nguyễn Du • Đạo cô Tam Hợp • Sư trưởng Giác Duyên • Giáng tiên Thúy Kiều</footer>
@@ -161,7 +161,7 @@ function spinWheel(){
   const resultText = document.getElementById("resultText");
 
   btn.disabled = true;
-  resultText.textContent = "Đang bốc quẻ...";
+  resultText.textContent = "Đang quay nón...";
   center.textContent = "...";
 
   // 1. Giữ đúng 12 số đã có sẵn trên ảnh chiếc nón.

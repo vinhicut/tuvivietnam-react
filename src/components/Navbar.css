@@ -1,0 +1,359 @@
+
+/* =========================================
+   NAVBAR - DESKTOP
+========================================= */
+
+.navbar {
+  width: 100%;
+  background: #f5e6c8;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 50px;
+  box-sizing: border-box;
+  padding: 0 40px;
+  position: relative;
+  z-index: 1000;
+  border-bottom: 1px solid #e0d0b0;
+}
+
+/* Menu chính - DỒN VỀ BÊN TRÁI */
+.nav-menu {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  flex: 0 0 auto;
+}
+
+/* Các item */
+.nav-menu > li {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+/* Link menu */
+.nav-menu > li > a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 50px;
+  padding: 0 15px;
+
+  color: #333;
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  white-space: nowrap;
+  box-sizing: border-box;
+
+  transition: background-color 0.2s ease;
+}
+
+.nav-menu > li > a:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Icon trang chủ */
+.home-icon {
+  margin-right: 5px;
+  font-size: 15px;
+}
+
+
+/* =========================================
+   SEARCH
+========================================= */
+
+.search-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-left: auto;
+
+  color: #333;
+  font-size: 20px;
+
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.search-icon:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+
+/* =========================================
+   DROPDOWN
+========================================= */
+
+.has-dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+
+  top: 100%;
+  left: 0;
+
+  width: 260px;
+  max-width: calc(100vw - 20px);
+
+  margin: 0;
+  padding: 6px 0;
+
+  list-style: none;
+
+  background: #fff;
+
+  border: 1px solid #ddd;
+  border-radius: 0 0 6px 6px;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  display: none;
+
+  z-index: 9999;
+}
+
+.has-dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Dropdown item */
+.dropdown-menu li {
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-menu li a {
+  display: flex;
+
+  align-items: center;
+
+  width: 100%;
+  min-height: 42px;
+
+  padding: 9px 14px;
+
+  box-sizing: border-box;
+
+  color: #333;
+
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  white-space: normal;
+}
+
+.dropdown-menu li a:hover {
+  background: #f7f7f7;
+  color: #c0392b;
+}
+
+.dropdown-menu li a.active {
+  background: #f1f1f1;
+  color: #c0392b;
+  font-weight: 600;
+}
+
+.dd-icon {
+  width: 28px;
+  flex: 0 0 28px;
+
+  margin-right: 8px;
+
+  text-align: center;
+
+  font-size: 17px;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1100px) {
+
+  .navbar {
+    padding: 0 20px;
+  }
+
+  .nav-menu > li > a {
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  .search-icon {
+    width: 36px;
+    font-size: 18px;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+  .navbar {
+    width: 100%;
+
+    min-height: auto;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    justify-content: flex-start;
+
+    padding: 0;
+
+    overflow: visible;
+  }
+
+  /* Menu tiếp tục dồn trái */
+  .nav-menu {
+    width: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    justify-content: flex-start;
+    align-items: stretch;
+
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-menu > li {
+    flex: 0 0 auto;
+  }
+
+  .nav-menu > li > a {
+    min-height: 42px;
+
+    padding: 8px 9px;
+
+    font-size: 11px;
+    line-height: 1.2;
+
+    white-space: nowrap;
+  }
+
+  .home-icon {
+    font-size: 13px;
+    margin-right: 3px;
+  }
+
+  /* Search */
+  .search-icon {
+    width: 100%;
+    height: 38px;
+
+    margin-left: 0;
+
+    border-radius: 0;
+
+    background: rgba(0, 0, 0, 0.03);
+
+    font-size: 18px;
+  }
+
+  /* Dropdown */
+  .dropdown-menu {
+    left: 0;
+
+    transform: none;
+
+    width: 260px;
+    max-width: calc(100vw - 20px);
+
+    min-width: 0;
+  }
+
+  .dropdown-menu li a {
+    min-height: 40px;
+
+    padding: 8px 12px;
+
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================
+   MOBILE NHỎ
+========================================= */
+
+@media (max-width: 480px) {
+
+  .navbar {
+    padding: 0;
+  }
+
+  .nav-menu {
+    justify-content: flex-start;
+  }
+
+  .nav-menu > li > a {
+    min-height: 40px;
+
+    padding: 7px 7px;
+
+    font-size: 10px;
+  }
+
+  .home-icon {
+    font-size: 12px;
+  }
+
+  .dropdown-menu {
+    width: 250px;
+    max-width: calc(100vw - 10px);
+  }
+
+  .dropdown-menu li a {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  .dd-icon {
+    width: 25px;
+    flex-basis: 25px;
+    margin-right: 6px;
+  }
+}
+
+
+/* =========================================
+   ĐIỆN THOẠI RẤT NHỎ
+========================================= */
+
+@media (max-width: 360px) {
+
+  .nav-menu > li > a {
+    padding: 7px 5px;
+    font-size: 9px;
+  }
+
+  .search-icon {
+    height: 36px;
+  }
+}
+
