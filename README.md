@@ -88,6 +88,8 @@ release website 1909/
 ├── .gitignore                         # Danh sách loại trừ khi đẩy lên Git
 ├── .oxlintrc.json                     # Cấu hình trình phân tích cú pháp Oxlint
 ├── vite.config.js                     # Cấu hình Vite & Proxy API
+├── RELEASE_NOTES_1909.md              # Ghi chú phiên bản phát hành chính thức
+├── Deployment_Security_Guide.md       # Cẩm nang triển khai bảo mật toàn diện trên máy chủ
 └── README.md                          # Tài liệu hướng dẫn sử dụng
 ```
 
