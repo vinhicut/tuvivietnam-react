@@ -87,9 +87,14 @@ function Footer() {
           </p>
           <div className="contact-info">
             <div>
-              Liên hệ: <a href="tel:0924616199">0924 616 199</a>
-            </div>
-            <div>info@tuvivietnam.vn</div>
+  Liên hệ: <a href="tel:0924616199">0924 616 199</a>
+</div>
+
+<div>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="tel:0385497085">0385 497 085</a>
+</div>
+            <div>info@tuvihongan.com</div>
           </div>
           <div className="footer-social">
             <a href="#">f</a>
@@ -98,7 +103,7 @@ function Footer() {
           </div>
         </div>
 
-        <div className="footer-links">
+       {/*  <div className="footer-links">
           <h4>LIÊN KẾT</h4>
           <div className="fb-page small">
             <div className="fb-header">
@@ -110,13 +115,13 @@ function Footer() {
             </div>
             <button className="fb-follow">f Theo dõi Trang</button>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="copyright">
         © 2026 - Diễn đàn Tử Vi Hồng Ân
         <div className="bottom-links">
-          <a href="#">Bói Dịch PT Thăng Long</a>
+         {/*  <a href="#">Bói Dịch PT Thăng Long</a> */}
           <a href="#">Bói Dịch Tử Vi Việt Nam</a>
         </div>
       </div>
