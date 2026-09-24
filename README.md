@@ -545,4 +545,3 @@ CORS_ORIGIN=https://ten-mien-cua-ban.com
 ---
 
 > **Tài liệu bàn giao này được tạo ngày 24/09/2026.**
-> Mọi thắc mắc hoặc vấn đề kỹ thuật, vui lòng liên hệ qua email được ghi trong phần Footer của website.
