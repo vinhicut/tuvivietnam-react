@@ -59,6 +59,7 @@ async function captureTuviBoard(scale = 3.5, options = {}) {
     const wrapper = document.querySelector('.tuvi-board-wrapper');
     const watermark = document.querySelector('.tb-watermark-bg');
     const staleOverlay = document.getElementById('tuviStaleOverlay');
+    const loadingOverlay = document.getElementById('tuviLoadingOverlay');
     if (!wrapper) throw new Error('Không tìm thấy .tuvi-board-wrapper');
 
     if (document.fonts && document.fonts.ready) {
@@ -68,6 +69,7 @@ async function captureTuviBoard(scale = 3.5, options = {}) {
     const prevZoom = wrapper.style.zoom;
     const prevWmOpacity = watermark ? watermark.style.opacity : '';
     const prevStaleDisplay = staleOverlay ? staleOverlay.style.display : '';
+    const prevLoadingDisplay = loadingOverlay ? loadingOverlay.style.display : '';
 
     const origCreatePattern = CanvasRenderingContext2D.prototype.createPattern;
     CanvasRenderingContext2D.prototype.createPattern = function(image, repetition) {
@@ -80,13 +82,32 @@ async function captureTuviBoard(scale = 3.5, options = {}) {
         return origCreatePattern.call(this, image, repetition);
     };
 
+    const board = document.getElementById('tuviBoard');
+    const prevTransform = wrapper.style.transform;
+    const prevTransformOrigin = wrapper.style.transformOrigin;
+    const prevWidth = wrapper.style.width;
+    const prevHeight = wrapper.style.height;
+    const prevBoardTransform = board ? board.style.transform : '';
+    const prevBoardTransformOrigin = board ? board.style.transformOrigin : '';
+
     try {
         wrapper.style.zoom = '1';
+        // Add support for new scaling mechanism
+        wrapper.style.transform = 'none';
+        wrapper.style.width = '';
+        wrapper.style.height = '';
+        if (board) {
+            board.style.transform = 'none';
+        }
+
         if (watermark && options.watermarkOpacity) {
             watermark.style.opacity = options.watermarkOpacity;
         }
         if (staleOverlay) {
             staleOverlay.style.display = 'none';
+        }
+        if (loadingOverlay) {
+            loadingOverlay.style.display = 'none';
         }
 
         await new Promise(r => requestAnimationFrame(r));
@@ -105,11 +126,24 @@ async function captureTuviBoard(scale = 3.5, options = {}) {
     } finally {
         CanvasRenderingContext2D.prototype.createPattern = origCreatePattern;
         wrapper.style.zoom = prevZoom;
+        wrapper.style.transform = prevTransform;
+        wrapper.style.transformOrigin = prevTransformOrigin;
+        wrapper.style.width = prevWidth;
+        wrapper.style.height = prevHeight;
+        const board = document.getElementById('tuviBoard');
+        if (board) {
+            board.style.transform = prevBoardTransform;
+            board.style.transformOrigin = prevBoardTransformOrigin;
+        }
+        
         if (watermark) {
             watermark.style.opacity = prevWmOpacity;
         }
         if (staleOverlay) {
             staleOverlay.style.display = prevStaleDisplay;
+        }
+        if (loadingOverlay) {
+            loadingOverlay.style.display = prevLoadingDisplay;
         }
     }
 }

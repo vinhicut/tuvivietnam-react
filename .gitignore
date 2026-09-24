@@ -7,11 +7,13 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Dependencies
+# Dependencies & Build Outputs
 node_modules
 dist
 dist-ssr
 *.local
+release website*
+"release website*"
 
 # Python
 __pycache__/
@@ -40,10 +42,21 @@ MANIFEST
 venv/
 ENV/
 
-# Environment Variables & Secrets
+# Environment Variables & Secrets (CRITICAL FOR PRE-DEPLOYMENT SECURITY)
 .env
 .env.*
 !.env.example
+
+# Credentials, Keys & Sensitive Assets
+client_secret*.json
+firebase-service-account*.json
+*-service-account*.json
+*.db
+*.sqlite
+*.sqlite3
+backend/data/*.db
+*.enc
+test_flask.py
 
 # Editor & OS
 .vscode/*

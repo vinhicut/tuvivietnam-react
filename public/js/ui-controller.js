@@ -227,22 +227,38 @@ function syncResponsiveWidths() {
         const inputPanel = document.querySelector('.input-panel');
         const exportSection = document.querySelector('.export-section');
         const footerNote = document.querySelector('.panel-footer-note');
-        if (!wrapper || !outputPanel || !inputPanel || !exportSection) return;
+        const board = document.getElementById('tuviBoard');
+        if (!wrapper || !outputPanel || !inputPanel || !exportSection || !board) return;
 
         const isMobile = window.innerWidth <= 1024;
+        
+        // Tính toán tỷ lệ scale thay cho zoom để tránh lỗi tràn chữ trên iOS
+        const BASE_WIDTH = 737; // 195mm
+        const BASE_HEIGHT = 1013; // 268mm
+        const padding = 20; // safe area padding
+        let scale = 1.0;
+        
+        if (isMobile) {
+            const availableWidth = document.body.clientWidth - padding;
+            scale = Math.min(1.0, availableWidth / BASE_WIDTH);
+        }
+        
+        board.style.transform = `scale(${scale})`;
+        board.style.transformOrigin = 'top left';
+        wrapper.style.width = `${BASE_WIDTH * scale}px`;
+        wrapper.style.height = `${BASE_HEIGHT * scale}px`;
 
         if (isMobile) {
             // Giao diện Điện thoại: Chuyển khối Xuất lá số xuống dưới Preview lá số
             if (exportSection.parentElement !== outputPanel) {
                 outputPanel.appendChild(exportSection);
             }
-            const rect = wrapper.getBoundingClientRect();
-            const boardWidth = Math.round(rect.width);
-            if (boardWidth > 0) {
-                exportSection.style.width = `${boardWidth}px`;
-                exportSection.style.maxWidth = `${boardWidth}px`;
-                inputPanel.style.width = `${boardWidth}px`;
-                inputPanel.style.maxWidth = `${boardWidth}px`;
+            const wrapperWidth = BASE_WIDTH * scale;
+            if (wrapperWidth > 0) {
+                exportSection.style.width = `${wrapperWidth}px`;
+                exportSection.style.maxWidth = `${wrapperWidth}px`;
+                inputPanel.style.width = `${wrapperWidth}px`;
+                inputPanel.style.maxWidth = `${wrapperWidth}px`;
             }
         } else {
             // Giao diện Máy tính: Khôi phục 100% giao diện gốc bên trong Bảng nhập liệu
@@ -259,7 +275,7 @@ function syncResponsiveWidths() {
             inputPanel.style.width = '';
             inputPanel.style.maxWidth = '';
         }
-    } catch (e) {}
+    } catch (_e) {}
 }
 
 // Báo cáo chiều cao thực tế về trang cha để tự động co giãn iframe (Zero scrollbars)
@@ -281,7 +297,7 @@ function notifyParentHeight() {
             const h = maxBottom > 0 ? Math.ceil(maxBottom) + 20 : 1040;
             window.parent.postMessage({ type: 'TUVI_IFRAME_RESIZE', height: h }, '*');
         }
-    } catch (e) {}
+    } catch (_e) {}
 }
 
 window.showTuViLoading = showTuViLoading;

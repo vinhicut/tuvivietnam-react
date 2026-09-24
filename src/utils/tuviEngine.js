@@ -5,7 +5,7 @@
         const CAN = ["Giáp", "Ất", "Bính", "Đinh", "Mậu", "Kỷ", "Canh", "Tân", "Nhâm", "Quý"];
         const CHI = ["Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi"];
         const CHI_DISPLAY = ["Tí", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi"];
-        const CAN_ABBR = ["G.", "Ấ.", "B.", "Đ.", "M.", "K.", "C.", "T.", "N.", "Q."];
+        const _CAN_ABBR = ["G.", "Ấ.", "B.", "Đ.", "M.", "K.", "C.", "T.", "N.", "Q."];
         const CAN_HANH = ["moc", "moc", "hoa", "hoa", "tho", "tho", "kim", "kim", "thuy", "thuy"];
         const CUNG_NAMES = ["MỆNH", "PHỤ MẪU", "PHÚC ĐỨC", "ĐIỀN TRẠCH", "QUAN LỘC", "NÔ BỘC", "THIÊN DI", "TẬT ÁCH", "TÀI BẠCH", "TỬ TỨC", "PHU THÊ", "HUYNH ĐỆ"];
 
@@ -231,23 +231,23 @@
             let canMonthIdx = ((canYearIdx % 5) * 2 + 2 + (calcLunarMonth - 1)) % 10;
             let chiMonthIdx = (calcLunarMonth + 1) % 12;
             let canMonth = CAN[canMonthIdx];
-            let chiMonth = CHI[chiMonthIdx];
+            let _chiMonth = CHI[chiMonthIdx];
 
             let jdDay = jdn(solarDay, solarMonth, solarYear);
             let canDayIdx = (jdDay + 9) % 10;
             let chiDayIdx = (jdDay + 1) % 12;
             let canDay = CAN[canDayIdx];
-            let chiDay = CHI[chiDayIdx];
+            let _chiDay = CHI[chiDayIdx];
 
             let canHourIdx = ((canDayIdx % 5) * 2 + hourChiIdx) % 10;
-            let chiHour = CHI[hourChiIdx];
+            let _chiHour = CHI[hourChiIdx];
             let canHour = CAN[canHourIdx];
 
             // 2. Can Chi Năm Xem Hạn
             let limitCanIdx = (limitYear - 4 + 1000) % 10;
             let limitChiIdx = (limitYear - 4 + 1200) % 12;
             let limitCan = CAN[limitCanIdx];
-            let limitChi = CHI[limitChiIdx];
+            let _limitChi = CHI[limitChiIdx];
             let tuoiMu = limitYear - lunarYear + 1;
 
             // 3. Âm Dương & Nạp Âm Bản Mệnh
@@ -901,6 +901,7 @@
 
         function toggleJsonViewer() {
             let box = document.getElementById("jsonContainer");
+            if (!box) return;
             box.style.display = (box.style.display === "block") ? "none" : "block";
             if (box.style.display === "block" && currentChartData) {
                 document.getElementById("jsonOutputContent").innerText = JSON.stringify(currentChartData, null, 2);
@@ -913,6 +914,9 @@
                 alert("Đã sao chép toàn bộ dữ liệu cấu trúc JSON vào clipboard!");
             });
         }
+
+        window.toggleJsonViewer = toggleJsonViewer;
+        window.copyJsonData = copyJsonData;
 
         // Tự động khởi chạy khi tải trang
         window.onload = function () {

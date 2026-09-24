@@ -152,7 +152,7 @@ export async function generateDPoPProof(htm, htu) {
         url.search = '';
         url.hash = '';
         cleanHtu = url.toString();
-    } catch (e) {
+    } catch (_e) {
         // Not a valid absolute URL, assume it is already clean or a relative path
     }
     

@@ -19,14 +19,14 @@
                 align-items: center;
                 justify-content: center;
                 overflow: visible;
-                zoom: 1 !important;
+                
             }
 
             .tuvi-board-wrapper {
                 box-shadow: none;
                 border: 2px solid #000;
                 padding: 0;
-                zoom: 1 !important;
+                
             }
 
             .tuvi-board {

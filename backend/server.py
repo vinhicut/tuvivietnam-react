@@ -20,7 +20,25 @@ from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 # Thêm thư mục backend vào sys.path
 BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.abspath(os.path.join(BACKEND_DIR, ".."))
-DIST_DIR = os.path.join(PROJECT_ROOT, "dist")
+
+# Nạp tự động các biến môi trường từ tệp .env nếu có
+ENV_PATH = os.path.join(PROJECT_ROOT, ".env")
+if os.path.exists(ENV_PATH):
+    try:
+        with open(ENV_PATH, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    key, val = line.split("=", 1)
+                    key = key.strip()
+                    val = val.strip().strip("'\"")
+                    if key not in os.environ:
+                        os.environ[key] = val
+    except Exception:
+        pass
+
+RELEASE_DIR = os.path.join(PROJECT_ROOT, "release website 2409")
+DIST_DIR = os.getenv("DIST_DIR", RELEASE_DIR if os.path.exists(RELEASE_DIR) else os.path.join(PROJECT_ROOT, "dist"))
 PUBLIC_DIR = os.path.join(PROJECT_ROOT, "public")
 
 if BACKEND_DIR not in sys.path:
@@ -126,8 +144,8 @@ class TuViRequestHandler(SimpleHTTPRequestHandler):
             payload = {
                 "status": "ok",
                 "service": "Tu Vi Hong An Core API Engine",
-                "version": "1.0.0-release-1909",
-                "static_directory": "dist" if os.path.exists(DIST_DIR) else "public"
+                "version": "1.0.0-release-2409",
+                "static_directory": "release website 2409" if os.path.exists(RELEASE_DIR) else ("dist" if os.path.exists(DIST_DIR) else "public")
             }
             self.wfile.write(json.dumps(payload, ensure_ascii=False).encode("utf-8"))
             return

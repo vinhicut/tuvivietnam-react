@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AuthModal from './AuthModal';
+import './TopBar.css';
 
 function TopBar() {
   const [authOpen, setAuthOpen] = useState(false);

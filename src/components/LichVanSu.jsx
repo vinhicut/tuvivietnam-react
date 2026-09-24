@@ -17,7 +17,7 @@ function jdFromDate(dd, mm, yyyy) {
   );
 }
 
-function jdToDate(jd) {
+function _jdToDate(jd) {
   const a = jd + 32044;
   const b = Math.floor((4 * a + 3) / 146097);
   const c = a - Math.floor((146097 * b) / 4);
@@ -153,13 +153,17 @@ function daysInMonth(year, month) {
 }
 
 function LichVanSu() {
-  const today = new Date();
-  const [viewYear, setViewYear] = useState(today.getFullYear());
-  const [viewMonth, setViewMonth] = useState(today.getMonth() + 1); // 1-12
+  const today = useMemo(() => new Date(), []);
+  const todayDay = today.getDate();
+  const todayMonth = today.getMonth() + 1;
+  const todayYear = today.getFullYear();
+
+  const [viewYear, setViewYear] = useState(todayYear);
+  const [viewMonth, setViewMonth] = useState(todayMonth); // 1-12
   const [selected, setSelected] = useState({
-    d: today.getDate(),
-    m: today.getMonth() + 1,
-    y: today.getFullYear(),
+    d: todayDay,
+    m: todayMonth,
+    y: todayYear,
   });
 
   const cells = useMemo(() => {
@@ -177,13 +181,13 @@ function LichVanSu() {
         lunarYear: ly,
         leap,
         isToday:
-          d === today.getDate() &&
-          viewMonth === today.getMonth() + 1 &&
-          viewYear === today.getFullYear(),
+          d === todayDay &&
+          viewMonth === todayMonth &&
+          viewYear === todayYear,
       });
     }
     return list;
-  }, [viewYear, viewMonth]);
+  }, [viewYear, viewMonth, todayDay, todayMonth, todayYear]);
 
   const selectedInfo = useMemo(() => {
     const { d, m, y } = selected;

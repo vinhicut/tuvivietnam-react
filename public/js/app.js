@@ -88,6 +88,9 @@ async function generateTuVi() {
 
 // Xử lý sự kiện co giãn màn hình
 window.addEventListener('resize', () => {
+    if (typeof syncResponsiveWidths === "function") {
+        syncResponsiveWidths();
+    }
     const cur = window.getCurrentChartData ? window.getCurrentChartData() : window.currentChartData;
     if (cur) {
         if (typeof updateMenhTaiQuanTriangle === "function") {
@@ -136,3 +139,4 @@ if (typeof ResizeObserver !== 'undefined') {
 }
 
 window.generateTuVi = generateTuVi;
+
