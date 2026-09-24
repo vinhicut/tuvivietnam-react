@@ -9,8 +9,11 @@ import sys
 import os
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-if CURRENT_DIR not in sys.path:
-    sys.path.insert(0, CURRENT_DIR)
+PROJECT_ROOT = os.path.abspath(os.path.join(CURRENT_DIR, "..", ".."))
+ASTROLOGY_MODULE = os.path.join(PROJECT_ROOT, "backend", "src", "modules", "astrology")
+
+if ASTROLOGY_MODULE not in sys.path:
+    sys.path.insert(0, ASTROLOGY_MODULE)
 
 from tuvi_engine import calculate_tuvi_chart
 
