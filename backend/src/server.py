@@ -158,6 +158,15 @@ def create_app():
 
         return Response("Không tìm thấy trang yêu cầu", status=404)
 
+    @app.errorhandler(404)
+    def spa_not_found(e):
+        if not request.path.startswith("/api/"):
+            folder = app.static_folder
+            index_file = os.path.join(folder, "index.html")
+            if os.path.isfile(index_file):
+                return send_from_directory(folder, "index.html")
+        return Response("Không tìm thấy trang yêu cầu", status=404)
+
     return app
 
 

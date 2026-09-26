@@ -24,7 +24,8 @@ function LaSoTuVi() {
 
     function handleResizeMessage(e) {
       if (e.data && e.data.type === 'TUVI_IFRAME_RESIZE' && e.data.height) {
-        setFrameHeight(Math.max(680, Math.ceil(e.data.height)));
+        const nextH = Math.max(680, Math.ceil(e.data.height));
+        setFrameHeight(prev => (Math.abs(prev - nextH) >= 4 ? nextH : prev));
       }
     }
 

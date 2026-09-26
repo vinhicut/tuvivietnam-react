@@ -237,6 +237,34 @@
         <div class="panel-footer-note">An sao theo Tử Vi Đẩu Số Tân Biên 1956</div>
     </div>
 
+    <!-- MODAL CHỌN NGÀY THÁNG NĂM SINH TRÊN MOBILE (FULL-SCREEN SHEET) -->
+    <div id="mobileDatePickerModal" class="mobile-datepicker-modal hidden">
+        <div class="mobile-datepicker-overlay" onclick="closeMobileDatePicker()"></div>
+        <div class="mobile-datepicker-container">
+            <div class="mobile-datepicker-header">
+                <div class="mobile-datepicker-title">CHỌN NGÀY THÁNG NĂM SINH</div>
+                <button type="button" class="btn-close-datepicker" onclick="closeMobileDatePicker()" aria-label="Đóng">✕</button>
+            </div>
+            <div class="mobile-datepicker-body">
+                <div class="picker-column" id="pickerColDay">
+                    <div class="picker-col-label">NGÀY</div>
+                    <div class="picker-options-list" id="pickerListDay"></div>
+                </div>
+                <div class="picker-column" id="pickerColMonth">
+                    <div class="picker-col-label">THÁNG</div>
+                    <div class="picker-options-list" id="pickerListMonth"></div>
+                </div>
+                <div class="picker-column" id="pickerColYear">
+                    <div class="picker-col-label">NĂM</div>
+                    <div class="picker-options-list" id="pickerListYear"></div>
+                </div>
+            </div>
+            <div class="mobile-datepicker-footer">
+                <button type="button" class="btn-confirm-datepicker" onclick="confirmMobileDatePicker()">XÁC NHẬN</button>
+            </div>
+        </div>
+    </div>
+
     <!-- CÁC MODULE JAVASCRIPT -->
     <script src="js/dpop.js?v=2409"></script>
     <script src="js/constants.js?v=2409"></script>

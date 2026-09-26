@@ -124,11 +124,28 @@ function collectInputParams() {
     };
 }
 
+function showGenerateButton() {
+    const btn = document.getElementById("btnGenerateTuVi");
+    if (btn) {
+        btn.classList.remove("is-hidden");
+        btn.classList.add("btn-reappear");
+    }
+}
+
+function hideGenerateButton() {
+    const btn = document.getElementById("btnGenerateTuVi");
+    if (btn) {
+        btn.classList.remove("btn-reappear");
+        btn.classList.add("is-hidden");
+    }
+}
+
 function showTuViStaleNotice() {
     const overlay = document.getElementById("tuviStaleOverlay");
     if (overlay) {
         overlay.classList.remove("hidden");
     }
+    showGenerateButton();
 }
 
 function hideTuViStaleNotice() {
@@ -217,6 +234,160 @@ function initEventListeners() {
             showTuViStaleNotice();
         });
     }
+
+    // 8. Tối ưu bộ chọn ngày/tháng/năm trên Mobile (Full-Screen Modal/Sheet)
+    const dateRowGroup = document.querySelector(".date-row-group");
+    const daySelect = document.getElementById("txtDay");
+    const monthSelect = document.getElementById("txtMonth");
+    const yearSelect = document.getElementById("txtYear");
+
+    function triggerMobilePicker(e) {
+        if (window.innerWidth <= 768) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            if (daySelect) daySelect.blur();
+            if (monthSelect) monthSelect.blur();
+            if (yearSelect) yearSelect.blur();
+            openMobileDatePicker();
+        }
+    }
+
+    if (dateRowGroup) {
+        dateRowGroup.addEventListener("click", triggerMobilePicker);
+    }
+    [daySelect, monthSelect, yearSelect].forEach(el => {
+        if (el) {
+            el.addEventListener("mousedown", triggerMobilePicker);
+            el.addEventListener("focus", triggerMobilePicker);
+        }
+    });
+
+    // 9. Đồng bộ số điện thoại Hotline ngẫu nhiên theo phiên (Session-based)
+    syncBoardHotline();
+}
+
+let selectedPickerDay = 1;
+let selectedPickerMonth = 1;
+let selectedPickerYear = 2006;
+
+function openMobileDatePicker() {
+    const modal = document.getElementById("mobileDatePickerModal");
+    if (!modal) return;
+
+    selectedPickerDay = parseInt(document.getElementById("txtDay")?.value) || 1;
+    selectedPickerMonth = parseInt(document.getElementById("txtMonth")?.value) || 1;
+    selectedPickerYear = parseInt(document.getElementById("txtYear")?.value) || 2006;
+
+    renderMobilePickerYear();
+    renderMobilePickerMonth();
+    renderMobilePickerDay();
+
+    modal.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+
+    // Tự động cuộn đến mục đang được chọn
+    setTimeout(() => {
+        document.querySelector("#pickerListDay .picker-opt-btn.selected")?.scrollIntoView({ block: "center", behavior: "smooth" });
+        document.querySelector("#pickerListMonth .picker-opt-btn.selected")?.scrollIntoView({ block: "center", behavior: "smooth" });
+        document.querySelector("#pickerListYear .picker-opt-btn.selected")?.scrollIntoView({ block: "center", behavior: "smooth" });
+    }, 80);
+}
+
+function closeMobileDatePicker() {
+    const modal = document.getElementById("mobileDatePickerModal");
+    if (modal) modal.classList.add("hidden");
+    document.body.style.overflow = "";
+}
+
+function confirmMobileDatePicker() {
+    const daySelect = document.getElementById("txtDay");
+    const monthSelect = document.getElementById("txtMonth");
+    const yearSelect = document.getElementById("txtYear");
+
+    if (yearSelect) yearSelect.value = selectedPickerYear;
+    if (monthSelect) monthSelect.value = selectedPickerMonth;
+    updateDaysInMonth();
+    if (daySelect) daySelect.value = selectedPickerDay;
+
+    showTuViStaleNotice();
+    closeMobileDatePicker();
+}
+
+function renderMobilePickerYear() {
+    const list = document.getElementById("pickerListYear");
+    if (!list) return;
+    list.innerHTML = "";
+    for (let y = 1900; y <= 2100; y++) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "picker-opt-btn" + (y === selectedPickerYear ? " selected" : "");
+        btn.textContent = y;
+        btn.onclick = () => {
+            selectedPickerYear = y;
+            document.querySelectorAll("#pickerListYear .picker-opt-btn").forEach(el => el.classList.remove("selected"));
+            btn.classList.add("selected");
+            renderMobilePickerDay();
+        };
+        list.appendChild(btn);
+    }
+}
+
+function renderMobilePickerMonth() {
+    const list = document.getElementById("pickerListMonth");
+    if (!list) return;
+    list.innerHTML = "";
+    for (let m = 1; m <= 12; m++) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "picker-opt-btn" + (m === selectedPickerMonth ? " selected" : "");
+        btn.textContent = "Tháng " + m;
+        btn.onclick = () => {
+            selectedPickerMonth = m;
+            document.querySelectorAll("#pickerListMonth .picker-opt-btn").forEach(el => el.classList.remove("selected"));
+            btn.classList.add("selected");
+            renderMobilePickerDay();
+        };
+        list.appendChild(btn);
+    }
+}
+
+function renderMobilePickerDay() {
+    const list = document.getElementById("pickerListDay");
+    if (!list) return;
+    list.innerHTML = "";
+    let isSolar = document.querySelector('input[name="calendar"]:checked')?.value === "solar";
+    let maxDays = 31;
+    if (isSolar) {
+        maxDays = new Date(selectedPickerYear, selectedPickerMonth, 0).getDate();
+    } else {
+        maxDays = 30;
+    }
+    if (selectedPickerDay > maxDays) selectedPickerDay = maxDays;
+
+    for (let d = 1; d <= maxDays; d++) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "picker-opt-btn" + (d === selectedPickerDay ? " selected" : "");
+        btn.textContent = d.toString().padStart(2, "0");
+        btn.onclick = () => {
+            selectedPickerDay = d;
+            document.querySelectorAll("#pickerListDay .picker-opt-btn").forEach(el => el.classList.remove("selected"));
+            btn.classList.add("selected");
+        };
+        list.appendChild(btn);
+    }
+}
+
+function syncBoardHotline() {
+    try {
+        const savedHotline = sessionStorage.getItem("tuvi_hotline");
+        const phoneEl = document.querySelector(".tb-header-phone");
+        if (savedHotline && phoneEl && savedHotline.length === 10) {
+            phoneEl.textContent = `${savedHotline.slice(0, 4)}.${savedHotline.slice(4, 7)}.${savedHotline.slice(7)}`;
+        }
+    } catch (_e) {}
 }
 
 // Điều chỉnh bố cục linh hoạt giữa Máy tính (>1024px) và Điện thoại (<=1024px)
@@ -282,6 +453,8 @@ function syncResponsiveWidths() {
     } catch (_e) {}
 }
 
+let lastReportedTuViHeight = 0;
+
 // Báo cáo chiều cao thực tế về trang cha để tự động co giãn iframe (Zero scrollbars)
 function notifyParentHeight() {
     syncResponsiveWidths();
@@ -290,25 +463,29 @@ function notifyParentHeight() {
             const board = document.querySelector('.tuvi-board-wrapper');
             const panel = document.querySelector('.input-panel');
             const exportSec = document.querySelector('.export-section');
+            const outputPanel = document.querySelector('.output-panel');
+
             let maxBottom = 0;
-            [board, panel, exportSec].forEach(el => {
+            const measureTargets = [board, panel, exportSec, outputPanel];
+            measureTargets.forEach(el => {
                 if (el) {
                     const r = el.getBoundingClientRect();
                     const b = r.bottom + (window.pageYOffset || document.documentElement.scrollTop || 0);
                     if (b > maxBottom) maxBottom = b;
                 }
             });
-            if (document.body && document.body.children) {
-                for (let i = 0; i < document.body.children.length; i++) {
-                    const child = document.body.children[i];
-                    if (child.tagName === 'SCRIPT' || child.tagName === 'STYLE') continue;
-                    const r = child.getBoundingClientRect();
-                    const b = r.bottom + (window.pageYOffset || document.documentElement.scrollTop || 0);
-                    if (b > maxBottom) maxBottom = b;
-                }
+
+            if (maxBottom <= 0) {
+                maxBottom = 960;
             }
-            const h = maxBottom > 0 ? Math.ceil(maxBottom) + 20 : (document.body ? document.body.scrollHeight : 1040);
-            window.parent.postMessage({ type: 'TUVI_IFRAME_RESIZE', height: h }, '*');
+
+            const h = Math.max(680, Math.ceil(maxBottom) + 8);
+
+            // Chỉ gửi khi chiều cao thay đổi thực sự tối thiểu 4px để tránh vòng lặp vô hạn
+            if (Math.abs(h - lastReportedTuViHeight) >= 4) {
+                lastReportedTuViHeight = h;
+                window.parent.postMessage({ type: 'TUVI_IFRAME_RESIZE', height: h }, '*');
+            }
         }
     } catch (_e) {}
 }
@@ -333,3 +510,10 @@ window.collectInputParams = collectInputParams;
 window.initEventListeners = initEventListeners;
 window.notifyParentHeight = notifyParentHeight;
 window.syncResponsiveWidths = syncResponsiveWidths;
+window.openMobileDatePicker = openMobileDatePicker;
+window.closeMobileDatePicker = closeMobileDatePicker;
+window.confirmMobileDatePicker = confirmMobileDatePicker;
+window.showGenerateButton = showGenerateButton;
+window.hideGenerateButton = hideGenerateButton;
+
+

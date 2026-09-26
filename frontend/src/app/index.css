@@ -1,11 +1,13 @@
-:root {
-  font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color: #213547;
-  background-color: #ffffff;
+@import "tailwindcss";
+
+.font-cinzel {
+  font-family: 'Cinzel Decorative', 'Noto Serif', serif;
 }
 
-#root {
-  width: 100%;
+.font-playfair {
+  font-family: 'Noto Serif', 'Playfair Display', Georgia, serif;
+}
+
+.font-display {
+  font-family: 'Noto Serif', 'Playfair Display', Georgia, Cambria, 'Times New Roman', Times, serif;
 }

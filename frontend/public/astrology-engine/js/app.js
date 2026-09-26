@@ -15,6 +15,13 @@ async function generateTuVi() {
         hideTuViStaleNotice();
     }
 
+    // Ẩn nút "Lập lá số" khi bắt đầu tính toán / render lá số mới
+    const btnGen = document.getElementById("btnGenerateTuVi");
+    if (btnGen) {
+        btnGen.classList.remove("btn-reappear");
+        btnGen.classList.add("is-hidden");
+    }
+
     // BƯỚC 1: KÍCH HOẠT MÀN CHE LOADING
     if (typeof showTuViLoading === "function") {
         showTuViLoading();
@@ -72,11 +79,20 @@ async function generateTuVi() {
         }
     } catch (err) {
         console.error("Không thể cập nhật lá số:", err);
+        // Trường hợp lỗi thì cho hiện lại nút để người dùng bấm thử lại
+        if (typeof showGenerateButton === "function") {
+            showGenerateButton();
+        }
     } finally {
         if (requestId === currentRequestId) {
             // BƯỚC 5: HẠ MÀN CHE
             if (typeof hideTuViLoading === "function") {
                 await hideTuViLoading();
+            }
+            // KHI LÁ SỐ ĐANG HIỂN THỊ (PREVIEW), NÚT VẪN ĐƯỢC ẨN ĐI ĐỂ GIAO DIỆN GỌN GÀNG VÀ TẬP TRUNG XEM LÁ SỐ.
+            // NÚT CHỈ HIỆN LẠI VỚI ANIMATION KHI NGƯỜI DÙNG THAY ĐỔI THÔNG TIN ĐẦU VÀO (showTuViStaleNotice).
+            if (typeof hideGenerateButton === "function") {
+                hideGenerateButton();
             }
             if (typeof notifyParentHeight === "function") {
                 notifyParentHeight();
@@ -142,7 +158,12 @@ if (typeof ResizeObserver !== 'undefined') {
     const ro = new ResizeObserver(() => {
         if (typeof notifyParentHeight === "function") notifyParentHeight();
     });
-    ro.observe(document.body);
+    document.addEventListener("DOMContentLoaded", () => {
+        const boardWrap = document.querySelector('.tuvi-board-wrapper');
+        const inputPan = document.querySelector('.input-panel');
+        if (boardWrap) ro.observe(boardWrap);
+        if (inputPan) ro.observe(inputPan);
+    });
 }
 
 window.generateTuVi = generateTuVi;

@@ -9,14 +9,18 @@ function Footer() {
             <strong>DIỄN ĐÀN TỬ VI HỒNG ÂN</strong>
           </div>
           <p>
-            Diễn đàn Tử Vi Việt Nam được thành lập từ năm 2026 bởi thầy Trần Ngọc Điệp, bút danh tuetvnb, cùng đông đảo thành viên yêu thích bộ
-            môn huyền học Tử Vi đẩu số. Và cùng với Câu lạc bộ Phong thủy Thăng
-            Long, đây đã là nơi chia sẻ kiến thức và đàm luận về các triết lý
-            Văn hoá Phương Đông của nhiều chí sỹ cả trong và ngoài nước.
+            Nền tảng "MIỄN PHÍ" giúp bạn lập lá số Tử Vi và nhận luận giải chuẩn xác. Tại đây, bạn còn có thể gieo quẻ Tarot Kiều để thấu tỏ công việc, tình duyên, gia đạo, đồng thời nhận những lời khuyên hữu ích về phong thủy nhà cửa và hôn nhân.
           </p>
           <div className="contact-info">
             <div>
-              Liên hệ: <a href="tel:0920461699">0920461699</a>
+              Liên hệ qua Zalo:{' '}
+              <a href="https://zalo.me/0924616199" target="_blank" rel="noopener noreferrer">
+                0924.616.199
+              </a>
+              {' - '}
+              <a href="https://zalo.me/0385497085" target="_blank" rel="noopener noreferrer">
+                0385.497.085
+              </a>
             </div>
             <div>
               <a href="https://www.tuvihongan.com" target="_blank" rel="noopener noreferrer">
@@ -25,10 +29,6 @@ function Footer() {
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="copyright">
-        <div>© 2026 - Diễn đàn Tử Vi Hồng Ân</div>
       </div>
     </footer>
   );

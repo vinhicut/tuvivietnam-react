@@ -81,8 +81,12 @@ button {
 }
 
 .top-navigation-wrapper {
-  position: relative;
-  z-index: 100;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  overflow-anchor: none;
 }
 
 .mobile-only {
@@ -91,9 +95,12 @@ button {
 
 /* ========== HEADER ========== */
 .header {
+  position: relative;
+  z-index: 1002;
   background: #ffffff;
   border-bottom: 1px solid var(--border-light);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  overflow-anchor: none;
 }
 
 .header-container {
@@ -382,12 +389,25 @@ button {
 
 /* ========== NAVBAR ========== */
 .navbar {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 999;
   background: #ffffff;
   border-bottom: 1px solid var(--border-light);
-  box-shadow: var(--shadow-sm);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+  will-change: transform, opacity;
+  overflow-anchor: none;
+}
+
+.navbar.navbar-hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .navbar-container {
@@ -531,8 +551,14 @@ button {
 /* ========== MAIN LAYOUT ========== */
 .main-content {
   flex: 1;
-  padding: 24px 20px 24px;
   background: var(--page-bg);
+  min-width: 0;
+  padding-top: 45px;
+}
+
+/* Tự động đệm lề cho các trang đơn không tự có container riêng */
+.main-content:not(:has(.homepage-wrapper)):not(:has(.lvs-master-container)) {
+  padding: 24px 20px;
 }
 
 .home-content-flow {
@@ -1060,7 +1086,7 @@ button {
 /* ========== FOOTER ========== */
 .footer {
   background: #1a1a1a;
-  padding-top: 40px;
+  padding: 24px 20px 20px;
   color: #fff;
 }
 
@@ -1122,10 +1148,9 @@ button {
 .footer-bottom {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 32px 40px;
+  padding: 0;
   display: flex;
   justify-content: center;
-  border-bottom: 1px solid #333;
 }
 
 .footer-about {
@@ -1141,22 +1166,23 @@ button {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
   color: #fff;
-  font-size: 16px;
+  font-size: 15px;
+  letter-spacing: 0.5px;
 }
 
 .footer-about p {
   font-size: 13px;
-  line-height: 1.7;
+  line-height: 1.6;
   color: #aaa;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .contact-info {
   font-size: 13px;
   display: flex;
-  gap: 20px;
+  gap: 18px;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
@@ -1234,9 +1260,11 @@ button {
   }
 
   .header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    position: relative;
+    z-index: 1002;
+    background: #ffffff;
+    border-bottom: 1px solid var(--border-light);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
     padding: 0;
   }
 
@@ -1335,6 +1363,90 @@ button {
     border-color: rgba(139, 29, 29, 0.2);
   }
 
+  .mobile-hotline-icon-btn {
+    width: 36px;
+    height: 36px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: var(--primary-red-light);
+    color: var(--primary-red);
+    text-decoration: none;
+    border: 1px solid rgba(139, 29, 29, 0.15);
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-hotline-icon-btn:hover {
+    background: var(--primary-red);
+    color: #ffffff;
+  }
+
+  /* Cụm 6 Nút Nhanh Ngay Dưới Thanh Logo & Brand trên Mobile */
+  .mobile-header-quick-bar {
+    display: flex !important;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    padding: 6px 10px 8px 10px;
+    background: #fafafa;
+    border-top: 1px solid #f1f5f9;
+    border-bottom: 1px solid var(--border-light);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    width: 100%;
+    box-sizing: border-box;
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+    will-change: transform, opacity;
+    overflow-anchor: none;
+  }
+
+  .mobile-header-quick-bar.mobile-quick-hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .mobile-quick-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    width: 100%;
+  }
+
+  .mobile-quick-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
+    height: 32px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #1e293b;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1px;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+
+  .mobile-quick-item:active,
+  .mobile-quick-item.active {
+    background: var(--primary-red-light);
+    color: var(--primary-red);
+    border-color: rgba(139, 29, 29, 0.25);
+    font-weight: 800;
+  }
+
   .mobile-menu-dropdown {
     display: block !important;
     position: absolute;
@@ -1344,7 +1456,7 @@ button {
     background: #ffffff;
     border-bottom: 3px solid var(--primary-red);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-    z-index: 999;
+    z-index: 1005;
     max-height: 80vh;
     overflow-y: auto;
     animation: mobileSlideDown 0.2s ease;
@@ -1437,7 +1549,7 @@ button {
   }
 
   .main-content {
-    padding: 12px 10px 40px;
+    padding: 92px 10px 40px !important;
   }
   .related-grid {
     grid-template-columns: 1fr;

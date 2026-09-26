@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import haLogo from '../assets/ha-logo.png';
 import AuthModal from '../../features/auth/AuthModal';
+import { getSessionHotline, formatHotline } from '../utils/hotline';
 
 const coreTools = [
   { label: 'LÁ SỐ TỬ VI', to: '/la-so-tu-vi' },
@@ -14,13 +15,14 @@ const coreTools = [
 
 function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [mobileSubOpen, setMobileSubOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [hotline, setHotline] = useState('0924616199');
   const location = useLocation();
   const headerRef = useRef(null);
 
   useEffect(() => {
+    setHotline(getSessionHotline());
     try {
       const saved = localStorage.getItem('tuvi_user');
       if (saved) setUser(JSON.parse(saved));
@@ -46,10 +48,92 @@ function Navbar() {
     setUser(null);
   };
 
-  // Close mobile menu when navigating to another route
+  const [isNavVisible, setIsNavVisible] = useState(true);
+  const isNavVisibleRef = useRef(true);
+
+  const setNavVisibility = (visible) => {
+    if (isNavVisibleRef.current !== visible) {
+      isNavVisibleRef.current = visible;
+      setIsNavVisible(visible);
+    }
+  };
+
+  // Close mobile menu when navigating to another route and restore visibility
   useEffect(() => {
     setMobileMenuOpen(false);
+    setNavVisibility(true);
   }, [location.pathname]);
+
+  // Smart Scroll Behavior: Chống giật lag 100%
+  useEffect(() => {
+    let lastScrollY = Math.max(0, window.scrollY || document.documentElement.scrollTop || 0);
+    let accumulatedScrollUp = 0;
+    let accumulatedScrollDown = 0;
+    let ticking = false;
+
+    const SCROLL_UP_THRESHOLD = 50; // Ngưỡng tích lũy khi cuộn ngược lên để hiển thị lại
+    const SCROLL_DOWN_THRESHOLD = 30; // Ngưỡng tích lũy khi cuộn xuống để ẩn
+    const TOP_PIN_THRESHOLD = 20; // Sát đỉnh trang (<= 20px) luôn hiển thị
+
+    const updateScrollState = () => {
+      const currentScrollY = Math.max(0, window.scrollY || document.documentElement.scrollTop || 0);
+
+      // Nếu menu mobile hoặc auth modal đang mở, giữ hiển thị đầy đủ
+      if (mobileMenuOpen || authOpen) {
+        setNavVisibility(true);
+        accumulatedScrollUp = 0;
+        accumulatedScrollDown = 0;
+        lastScrollY = currentScrollY;
+        ticking = false;
+        return;
+      }
+
+      // Sát đỉnh trang: Luôn hiển thị bình thường
+      if (currentScrollY <= TOP_PIN_THRESHOLD) {
+        setNavVisibility(true);
+        accumulatedScrollUp = 0;
+        accumulatedScrollDown = 0;
+        lastScrollY = currentScrollY;
+        ticking = false;
+        return;
+      }
+
+      const delta = currentScrollY - lastScrollY;
+      lastScrollY = currentScrollY;
+
+      if (delta > 0) {
+        // Cuộn xuống (Scroll Down)
+        accumulatedScrollUp = 0;
+        accumulatedScrollDown += delta;
+
+        if (isNavVisibleRef.current && accumulatedScrollDown >= SCROLL_DOWN_THRESHOLD) {
+          setNavVisibility(false);
+          accumulatedScrollDown = 0;
+        }
+      } else if (delta < 0) {
+        // Cuộn ngược lên (Scroll Up)
+        accumulatedScrollDown = 0;
+        accumulatedScrollUp += Math.abs(delta);
+
+        if (!isNavVisibleRef.current && accumulatedScrollUp >= SCROLL_UP_THRESHOLD) {
+          setNavVisibility(true);
+          accumulatedScrollUp = 0;
+        }
+      }
+
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScrollState);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [mobileMenuOpen, authOpen]);
 
   // Close mobile menu when clicking outside
   useEffect(() => {
@@ -69,7 +153,8 @@ function Navbar() {
   }, [mobileMenuOpen]);
 
   return (
-    <div className="top-navigation-wrapper" ref={headerRef}>
+    <>
+      <div className="top-navigation-wrapper" ref={headerRef}>
       {/* HEADER ROW */}
       <header className="header">
         <div className="header-container">
@@ -106,7 +191,7 @@ function Navbar() {
             </div>
           </div>
 
-          {/* 6 Quick Action Buttons (2 rows x 3 columns) */}
+          {/* 6 Quick Action Buttons (2 rows x 3 columns) - Desktop */}
           <div className="header-quick-buttons desktop-only">
             <div className="quick-buttons-grid">
               {coreTools.map((btn) => (
@@ -125,12 +210,23 @@ function Navbar() {
           <div className="header-actions desktop-only">
             <div className="header-info-badge">
               <span className="info-title">TƯ VẤN HỌC THUẬT & LUẬN GIẢI</span>
-              <a href="tel:0920461699" className="info-hotline">0920.461.699</a>
+              <a href={`tel:${hotline}`} className="info-hotline">{formatHotline(hotline)}</a>
             </div>
           </div>
 
-          {/* Mobile Search & Menu Button: placed in the same line with the logo */}
+          {/* Mobile Header Controls: User + Hotline Icon + Menu Button */}
           <div className="mobile-header-controls mobile-only">
+            <a
+              href={`tel:${hotline}`}
+              className="mobile-hotline-icon-btn"
+              title={`Gọi hotline ${formatHotline(hotline)}`}
+              aria-label="Gọi hotline"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </a>
+
             <button
               type="button"
               className="mobile-auth-icon-btn"
@@ -172,49 +268,16 @@ function Navbar() {
         {/* Mobile Menu Dropdown Panel */}
         {mobileMenuOpen && (
           <div className="mobile-menu-dropdown mobile-only">
-            <div className="mobile-quick-buttons">
-              <div className="quick-buttons-grid">
-                {coreTools.map((btn) => (
-                  <Link
-                    key={btn.label}
-                    to={btn.to}
-                    className={`header-quick-btn ${location.pathname === btn.to ? 'active' : ''}`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {btn.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
             <ul className="mobile-nav-menu">
               <li className={location.pathname === '/' ? 'active' : ''}>
                 <Link to="/" onClick={() => setMobileMenuOpen(false)}>
                   TRANG CHỦ
                 </Link>
               </li>
-              <li className={`has-mobile-dropdown ${mobileSubOpen ? 'open' : ''}`}>
-                <div
-                  className="mobile-dropdown-header"
-                  onClick={() => setMobileSubOpen(!mobileSubOpen)}
-                >
-                  <span>CÔNG CỤ</span>
-                  <span className="caret-mobile">{mobileSubOpen ? '▴' : '▾'}</span>
-                </div>
-                {mobileSubOpen && (
-                  <ul className="mobile-submenu">
-                    {coreTools.map((item) => (
-                      <li key={item.label}>
-                        <Link
-                          to={item.to}
-                          className={location.pathname === item.to ? 'active' : ''}
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          {item.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+              <li className={location.pathname === '/la-so-tu-vi' ? 'active' : ''}>
+                <Link to="/la-so-tu-vi" onClick={() => setMobileMenuOpen(false)}>
+                  LÁ SỐ
+                </Link>
               </li>
               <li className={location.pathname.startsWith('/chuyen-muc') ? 'active' : ''}>
                 <Link to="/chuyen-muc" onClick={() => setMobileMenuOpen(false)}>
@@ -231,9 +294,9 @@ function Navbar() {
                   KHÓA HỌC
                 </Link>
               </li>
-              <li className={location.pathname === '/cua-hang' ? 'active' : ''}>
-                <Link to="/cua-hang" onClick={() => setMobileMenuOpen(false)}>
-                  CỬA HÀNG
+              <li className={location.pathname === '/chinh-sach' ? 'active' : ''}>
+                <Link to="/chinh-sach" onClick={() => setMobileMenuOpen(false)}>
+                  CHÍNH SÁCH
                 </Link>
               </li>
               <li className={location.pathname === '/lien-he' ? 'active' : ''}>
@@ -245,37 +308,41 @@ function Navbar() {
 
             <div className="mobile-menu-contact">
               <div className="mobile-contact-title">TƯ VẤN HỌC THUẬT & LUẬN GIẢI</div>
-              <a href="tel:0920461699" className="mobile-hotline-btn">
-                📞 0920.461.699
+              <a href={`tel:${hotline}`} className="mobile-hotline-btn">
+                📞 {formatHotline(hotline)}
               </a>
             </div>
           </div>
         )}
       </header>
 
+      {/* Cụm 6 Nút Nhanh Ngay Dưới Thanh Logo & Brand trên Mobile */}
+      <div
+        className={`mobile-header-quick-bar mobile-only ${!isNavVisible ? 'mobile-quick-hidden' : ''}`}
+        aria-label="Khối truy cập tính năng nhanh"
+      >
+        <div className="mobile-quick-grid">
+          {coreTools.map((btn) => (
+            <Link
+              key={btn.label}
+              to={btn.to}
+              className={`mobile-quick-item ${location.pathname === btn.to ? 'active' : ''}`}
+            >
+              {btn.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+
       {/* DESKTOP NAVBAR ROW (Hidden on mobile) */}
-      <nav className="navbar desktop-only">
+      <nav className={`navbar desktop-only ${!isNavVisible ? 'navbar-hidden' : ''}`}>
         <div className="navbar-container">
           <ul className="nav-menu">
             <li className={location.pathname === '/' ? 'nav-item active' : 'nav-item'}>
               <Link to="/">TRANG CHỦ</Link>
             </li>
-            <li className="nav-item has-dropdown">
-              <Link to="/la-so-tu-vi">
-                CÔNG CỤ <span className="caret">▾</span>
-              </Link>
-              <ul className="dropdown-menu">
-                {coreTools.map((item) => (
-                  <li key={item.label}>
-                    <Link
-                      to={item.to}
-                      className={location.pathname === item.to ? 'active' : ''}
-                    >
-                      <span className="dd-label">{item.label}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+            <li className={location.pathname === '/la-so-tu-vi' ? 'nav-item active' : 'nav-item'}>
+              <Link to="/la-so-tu-vi">LÁ SỐ</Link>
             </li>
             <li className={location.pathname.startsWith('/chuyen-muc') ? 'nav-item active' : 'nav-item'}>
               <Link to="/chuyen-muc">BÀI VIẾT</Link>
@@ -286,8 +353,8 @@ function Navbar() {
             <li className={location.pathname === '/khoa-hoc' ? 'nav-item active' : 'nav-item'}>
               <Link to="/khoa-hoc">KHÓA HỌC</Link>
             </li>
-            <li className={location.pathname === '/cua-hang' ? 'nav-item active' : 'nav-item'}>
-              <Link to="/cua-hang">CỬA HÀNG</Link>
+            <li className={location.pathname === '/chinh-sach' ? 'nav-item active' : 'nav-item'}>
+              <Link to="/chinh-sach">CHÍNH SÁCH</Link>
             </li>
             <li className={location.pathname === '/lien-he' ? 'nav-item active' : 'nav-item'}>
               <Link to="/lien-he">LIÊN HỆ</Link>
@@ -295,15 +362,16 @@ function Navbar() {
           </ul>
         </div>
       </nav>
-
-      <AuthModal
-        open={authOpen}
-        onClose={() => setAuthOpen(false)}
-        user={user}
-        onAuthSuccess={(u) => setUser(u)}
-        onLogout={handleLogout}
-      />
     </div>
+
+    <AuthModal
+      open={authOpen}
+      onClose={() => setAuthOpen(false)}
+      user={user}
+      onAuthSuccess={(u) => setUser(u)}
+      onLogout={handleLogout}
+    />
+  </>
   );
 }
 

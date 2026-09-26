@@ -1,11 +1,12 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
   build: {
-    // Thư mục build đầu ra theo yêu cầu release chính thức: 'release website 2409'
+    // Thư mục build đầu ra theo yêu cầu release chính thức: 'release website 2609'
     outDir: '../releases/dist',
     // Vô hiệu hóa source maps trên production để tránh lộ cấu trúc và mã nguồn gốc
     sourcemap: false,
